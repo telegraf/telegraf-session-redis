@@ -1,0 +1,29 @@
+{
+  "name": "telegraf-session-redis",
+  "version": "0.0.1",
+  "description": "Telegraf redis session middleware",
+  "main": "lib/session.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/telegraf/telegraf-session-redis.git"
+  },
+  "keywords": [
+    "telegram",
+    "telegraf",
+    "bot framework",
+    "session",
+    "middleware",
+    "redis"
+  ],
+  "author": "Vitaly Domnikov <dotcypress@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/telegraf/telegraf-session-redis/issues"
+  },
+  "homepage": "https://github.com/telegraf/telegraf-session-redis#readme",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "redis": "^2.6.0-1",
+    "thunkify": "^2.1.2"
+  }
+}
