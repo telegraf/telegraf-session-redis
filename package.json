@@ -21,9 +21,23 @@
     "url": "https://github.com/telegraf/telegraf-session-redis/issues"
   },
   "homepage": "https://github.com/telegraf/telegraf-session-redis#readme",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "files": [
+    "lib/session.js"
+  ],
+  "scripts": {
+    "test": "mocha test --require should"
+  },
   "dependencies": {
     "debug": "^2.2.0",
     "redis": "^2.6.0-1",
     "thunkify": "^2.1.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1",
+    "telegraf": "^0.0.1"
   }
 }
