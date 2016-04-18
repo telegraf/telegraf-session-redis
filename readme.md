@@ -1,6 +1,6 @@
 # Telegraf redis session middleware
 
-[![Build Status](https://travis-ci.org/telegraf/talagram-session-redis.png?branch=master)](https://travis-ci.org/telegraf/talagram-session-redis)
+[![Build Status](https://travis-ci.org/telegraf/telagraf-session-redis.png?branch=master)](https://travis-ci.org/telegraf/telagraf-session-redis)
 
 Redis store-based session middleware for Telegtaf.
 
