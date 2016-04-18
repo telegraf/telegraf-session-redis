@@ -1,6 +1,6 @@
 {
   "name": "telegraf-session-redis",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Telegraf redis session middleware",
   "main": "lib/session.js",
   "repository": {
