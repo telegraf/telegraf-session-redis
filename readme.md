@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/telegraf/talagram-session-redis.png?branch=master)](https://travis-ci.org/telegraf/talagram-session-redis)
 
-  Redis store-based session middleware for Telegtaf.
+Redis store-based session middleware for Telegtaf.
 
 ## Installation
 
@@ -20,8 +20,8 @@ var app = telegraf(process.env.BOT_TOKEN);
 
 app.use(session({
     store: {
-      host: process.env.SESSION_PORT_6379_TCP_ADDR || '127.0.0.1',
-      port: process.env.SESSION_PORT_6379_TCP_PORT || 6379,
+      host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
+      port: process.env.TELEGRAM_SESSION_PORT || 6379,
       ttl: 3600,
     },
   },
@@ -60,7 +60,7 @@ function getSessionKey(msg) {
 
 ### Destroying a session
 
-  To destroy a session simply set it to `null`:
+To destroy a session simply set it to `null`:
 
 ```js
 this.session = null;
@@ -68,4 +68,4 @@ this.session = null;
 
 ## License
 
-  MIT
+MIT
