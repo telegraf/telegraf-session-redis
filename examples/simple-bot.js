@@ -1,7 +1,7 @@
 var Telegraf = require('telegraf')
 var redisSession = require('../lib/session')
 
-var app = new Telegraf(process.env.BOT_TOKEN, {polling: true})
+var app = new Telegraf(process.env.BOT_TOKEN)
 
 var sessionMiddleware = redisSession({
   store: {
