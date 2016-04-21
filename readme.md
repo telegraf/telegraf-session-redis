@@ -52,16 +52,18 @@ app.startPolling();
 Default session key depends on sender id and chat id:
 ```
 function getSessionKey(msg) {
+  //CallbackQuery handling
+  msg = msg.message || msg
   if (!msg.chat && !msg.from) {
     return
   }
-  return `${msg.chat.id}:${msg.from.username}`
+  return `${msg.chat.id}:${msg.from.id}`
 }
 ```
 
 ### Destroying a session
 
-To destroy a session simply set it to `null`:
+To destroy a session simply set it to `null`.
 
 ```js
 this.session = null;
