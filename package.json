@@ -1,6 +1,6 @@
 {
   "name": "telegraf-session-redis",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Telegraf redis session middleware",
   "main": "lib/session.js",
   "repository": {
@@ -35,9 +35,12 @@
     "redis": "^2.6.0-1",
     "thunkify": "^2.1.2"
   },
+  "peerDependencies": {
+    "telegraf": "^0.3.0"
+  },
   "devDependencies": {
     "mocha": "^2.4.5",
     "should": "^8.3.1",
-    "telegraf": "^0.0.1"
+    "telegraf": "^0.3.0"
   }
 }

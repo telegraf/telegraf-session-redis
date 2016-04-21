@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/telegraf/telegraf-session-redis.svg?branch=master&style=flat-square)](https://travis-ci.org/telegraf/telegraf-session-redis)
 [![NPM Version](https://img.shields.io/npm/v/telegraf-session-redis.svg?style=flat-square)](https://www.npmjs.com/package/telegraf-session-redis)
 
-Redis store-based session middleware for Telegtaf.
+Redis store-based session middleware for [Telegtaf](https://github.com/telegraf/telegraf).
 
 ## Installation
 
@@ -22,8 +22,7 @@ var app = telegraf(process.env.BOT_TOKEN);
 app.use(session({
     store: {
       host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
-      port: process.env.TELEGRAM_SESSION_PORT || 6379,
-      ttl: 3600,
+      port: process.env.TELEGRAM_SESSION_PORT || 6379
     },
   },
 ));
@@ -46,18 +45,23 @@ app.startPolling();
   * `port`: Redis port (default: *6379*)
   * `path`: Unix socket string
   * `url`:  Redis url
+* `ttl`: session ttl (default: forever)
+* `getSessionKey`: session key function (event -> string)
 
-* `getSessionKey`: session key function (msg -> string)
+Default session key depends on sender and chat(if available):
 
-Default session key depends on sender id and chat id:
 ```
-function getSessionKey(msg) {
-  //CallbackQuery handling
-  msg = msg.message || msg
-  if (!msg.chat && !msg.from) {
-    return
+function getSessionKey(event) {
+  var chatId = 'global'
+  if (event.chat) {
+    // Handle messages
+    chatId = event.chat.id
   }
-  return `${msg.chat.id}:${msg.from.id}`
+  if (event.message && event.message.chat) {
+    // Handle CallbackQuery
+    chatId = event.message.chat.id
+  }
+  return `${event.from.id}:${chatId}`
 }
 ```
 
