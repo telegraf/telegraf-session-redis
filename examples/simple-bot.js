@@ -16,7 +16,7 @@ app.on('text', function * () {
   this.session.counter++
 })
 
-app.on('/stats', function * () {
+app.hears('/stats', function * () {
   yield this.reply(`${this.session.counter} messages from ${this.message.from.username}`)
 })
 
