@@ -14,10 +14,10 @@ $ npm install telegraf-session-redis
 ## Example
   
 ```js
-var telegraf = require('telegraf');
-var session = require('telegraf-session-redis');
+var telegraf = require('telegraf')
+var session = require('telegraf-session-redis')
 
-var app = telegraf(process.env.BOT_TOKEN);
+var app = telegraf(process.env.BOT_TOKEN)
 
 app.use(session({
     store: {
@@ -25,15 +25,15 @@ app.use(session({
       port: process.env.TELEGRAM_SESSION_PORT || 6379
     },
   },
-));
+))
 
-app.use(function * (){
+app.on('text', function * (){
   this.session.counter = this.session.counter || 0
   this.session.counter++
   console.log('->', this.session)
 })
 
-app.startPolling();
+app.startPolling()
 ```
 
 ## API
@@ -70,7 +70,7 @@ function getSessionKey(event) {
 To destroy a session simply set it to `null`.
 
 ```js
-this.session = null;
+this.session = null
 ```
 
 ## License
