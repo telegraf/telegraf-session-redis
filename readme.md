@@ -30,7 +30,7 @@ app.use(session({
 app.on('text', function * (){
   this.session.counter = this.session.counter || 0
   this.session.counter++
-  console.log('->', this.session)
+  console.log('Session', this.session)
 })
 
 app.startPolling()
