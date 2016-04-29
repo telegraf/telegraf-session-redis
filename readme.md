@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/telegraf/telegraf-session-redis.svg?branch=master&style=flat-square)](https://travis-ci.org/telegraf/telegraf-session-redis)
 [![NPM Version](https://img.shields.io/npm/v/telegraf-session-redis.svg?style=flat-square)](https://www.npmjs.com/package/telegraf-session-redis)
 
-Redis store-based session middleware for [Telegtaf](https://github.com/telegraf/telegraf).
+Redis store-based session middleware for [Telegraf](https://github.com/telegraf/telegraf).
 
 ## Installation
 
@@ -14,10 +14,10 @@ $ npm install telegraf-session-redis
 ## Example
   
 ```js
-var telegraf = require('telegraf');
-var session = require('telegraf-session-redis');
+var telegraf = require('telegraf')
+var session = require('telegraf-session-redis')
 
-var app = telegraf(process.env.BOT_TOKEN);
+var app = telegraf(process.env.BOT_TOKEN)
 
 app.use(session({
     store: {
@@ -25,15 +25,15 @@ app.use(session({
       port: process.env.TELEGRAM_SESSION_PORT || 6379
     },
   },
-));
+))
 
-app.use(function * (){
+app.on('text', function * (){
   this.session.counter = this.session.counter || 0
   this.session.counter++
-  console.log('->', this.session)
+  console.log('Session', this.session)
 })
 
-app.startPolling();
+app.startPolling()
 ```
 
 ## API
@@ -70,7 +70,7 @@ function getSessionKey(event) {
 To destroy a session simply set it to `null`.
 
 ```js
-this.session = null;
+this.session = null
 ```
 
 ## License
