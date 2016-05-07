@@ -14,10 +14,10 @@ $ npm install telegraf-session-redis
 ## Example
   
 ```js
-var telegraf = require('telegraf')
+var Telegraf = require('telegraf')
 var session = require('telegraf-session-redis')
 
-var app = telegraf(process.env.BOT_TOKEN)
+var app = new Telegraf(process.env.BOT_TOKEN)
 
 app.use(session({
     store: {
