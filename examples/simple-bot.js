@@ -1,9 +1,9 @@
 var Telegraf = require('telegraf')
 var redisSession = require('../lib/session')
 
-var app = new Telegraf(process.env.BOT_TOKEN)
+var telegraf = new Telegraf(process.env.BOT_TOKEN)
 
-app.use(redisSession({
+telegraf.use(redisSession({
   store: {
     host: process.env.SESSION_PORT_6379_TCP_ADDR || '127.0.0.1',
     port: process.env.SESSION_PORT_6379_TCP_PORT || 6379,
@@ -11,13 +11,13 @@ app.use(redisSession({
   }
 }))
 
-app.on('text', function * () {
+telegraf.on('text', function * () {
   this.session.counter = this.session.counter || 0
   this.session.counter++
 })
 
-app.hears('/stats', function * () {
+telegraf.hears('/stats', function * () {
   yield this.reply(`${this.session.counter} messages from ${this.message.from.username}`)
 })
 
-app.startPolling(10)
+telegraf.startPolling()

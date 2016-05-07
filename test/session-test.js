@@ -52,5 +52,27 @@ describe('Telegraf Session', function () {
       })
     app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
   })
-  describe('session key', function () {})
+
+  it('ttl', function (done) {
+    this.timeout(5000)
+    var app = new Telegraf()
+    app.on('photo',
+      session({ttl: 1}),
+      function * () {
+        this.session.photo = 'sample.png'
+        this.session.photo.should.be.equal('sample.png')
+        setTimeout(function () {
+           app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
+        }, 2000)
+      })
+    app.on('text',
+      session(),
+      function * () {
+        this.session.should.not.have.property('photo')
+        done()
+      })
+    setTimeout(function () {
+      app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, photo: {}}})
+    }, 500)
+  })
 })
