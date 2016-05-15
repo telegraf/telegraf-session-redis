@@ -5,8 +5,8 @@ var telegraf = new Telegraf(process.env.BOT_TOKEN)
 
 telegraf.use(redisSession({
   store: {
-    host: process.env.SESSION_PORT_6379_TCP_ADDR || '127.0.0.1',
-    port: process.env.SESSION_PORT_6379_TCP_PORT || 6379,
+    host: process.env.SESSION_TCP_ADDR || '127.0.0.1',
+    port: process.env.SESSION_TCP_PORT || 6379,
     ttl: 3600
   }
 }))
