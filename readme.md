@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/telegraf/telegraf-session-redis.svg?branch=master&style=flat-square)](https://travis-ci.org/telegraf/telegraf-session-redis)
 [![NPM Version](https://img.shields.io/npm/v/telegraf-session-redis.svg?style=flat-square)](https://www.npmjs.com/package/telegraf-session-redis)
 
-Redis store-based session middleware for [Telegraf](https://github.com/telegraf/telegraf).
+Redis store-based session middleware for [Telegraf (Telegram bot framework)](https://github.com/telegraf/telegraf).
 
 ## Installation
 
