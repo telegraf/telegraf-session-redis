@@ -47,22 +47,13 @@ telegraf.startPolling()
   * `url`:  Redis url
   * `...`: [Other redis connection options](http://redis.js.org/#api-rediscreateclient)
 * `ttl`: session ttl (default: forever)
-* `getSessionKey`: session key function (event -> string)
+* `getSessionKey`: session key function (context -> string)
 
-Default session key depends on sender and chat(if available):
+Default session key depends on sender/chat:
 
 ```js
-function getSessionKey(event) {
-  var chatId = 'global'
-  if (event.chat) {
-    // Handle messages
-    chatId = event.chat.id
-  }
-  // Handle CallbackQuery
-  if (event.message && event.message.chat) {
-    chatId = event.message.chat.id
-  }
-  return `${event.from.id}:${chatId}`
+function getSessionKey(ctx) {
+  return `${ctx.from.id}:${ctx.chat.id}`
 }
 ```
 

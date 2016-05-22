@@ -17,7 +17,7 @@ telegraf.on('text', function * () {
 })
 
 telegraf.hears('/stats', function * () {
-  yield this.reply(`${this.session.counter} messages from ${this.message.from.username}`)
+  yield this.reply(`${this.session.counter} messages from ${this.from.username}`)
 })
 
 telegraf.startPolling()
