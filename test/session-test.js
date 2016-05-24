@@ -62,7 +62,13 @@ describe('Telegraf Session', function () {
         this.session.photo = 'sample.png'
         this.session.photo.should.be.equal('sample.png')
         setTimeout(function () {
-           app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
+          app.handleUpdate({
+            message: {
+              chat: {id: 1},
+              from: {id: 1},
+              text: 'hey'
+            }
+          })
         }, 2000)
       })
     app.on('text',
@@ -72,7 +78,13 @@ describe('Telegraf Session', function () {
         done()
       })
     setTimeout(function () {
-      app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, photo: {}}})
-    }, 500)
+      app.handleUpdate({
+        message: {
+          chat: {id: 1},
+          from: {id: 1},
+          photo: {}
+        }
+      })
+    }, 100)
   })
 })
