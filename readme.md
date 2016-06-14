@@ -14,23 +14,23 @@ $ npm install telegraf-session-redis
 ## Example
   
 ```js
-var Telegraf = require('telegraf')
-var session = require('telegraf-session-redis')
+const Telegraf = require('telegraf')
+const session = require('telegraf-session-redis')
 
-var telegraf = new Telegraf(process.env.BOT_TOKEN)
+const telegraf = new Telegraf(process.env.BOT_TOKEN)
 
 telegraf.use(session({
     store: {
       host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
       port: process.env.TELEGRAM_SESSION_PORT || 6379
-    },
-  },
+    }
+  }
 ))
 
-telegraf.on('text', function * (){
-  this.session.counter = this.session.counter || 0
-  this.session.counter++
-  console.log('Session', this.session)
+telegraf.on('text', (ctx) => {
+  ctx.session.counter = ctx.session.counter || 0
+  ctx.session.counter++
+  console.log('Session', ctx.session)
 })
 
 telegraf.startPolling()
