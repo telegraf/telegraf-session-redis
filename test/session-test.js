@@ -7,9 +7,9 @@ describe('Telegraf Session', function () {
     var app = new Telegraf()
     app.on('text',
       session(),
-      function * () {
-        should.exist(this.session)
-        this.session.foo = 42
+      (ctx) => {
+        should.exist(ctx.session)
+        ctx.session.foo = 42
         done()
       })
     app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
@@ -19,10 +19,10 @@ describe('Telegraf Session', function () {
     var app = new Telegraf()
     app.on('text',
       session(),
-      function * () {
-        should.exist(this.session)
-        this.session.should.have.property('foo')
-        this.session.foo.should.be.equal(42)
+      (ctx) => {
+        should.exist(ctx.session)
+        ctx.session.should.have.property('foo')
+        ctx.session.foo.should.be.equal(42)
         done()
       })
     app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
@@ -32,9 +32,9 @@ describe('Telegraf Session', function () {
     var app = new Telegraf()
     app.on('text',
       session(),
-      function * () {
-        should.exist(this.session)
-        this.session.should.not.have.property('foo')
+      (ctx) => {
+        should.exist(ctx.session)
+        ctx.session.should.not.have.property('foo')
         done()
       })
     app.handleUpdate({message: {chat: {id: 1}, from: {id: 999}, text: 'hey'}})
@@ -44,10 +44,10 @@ describe('Telegraf Session', function () {
     var app = new Telegraf()
     app.on('text',
       session(),
-      function * () {
-        this.session = null
-        should.exist(this.session)
-        this.session.should.not.have.property('foo')
+      (ctx) => {
+        ctx.session = null
+        should.exist(ctx.session)
+        ctx.session.should.not.have.property('foo')
         done()
       })
     app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
@@ -58,9 +58,9 @@ describe('Telegraf Session', function () {
     var app = new Telegraf()
     app.on('photo',
       session({ttl: 1}),
-      function * () {
-        this.session.photo = 'sample.png'
-        this.session.photo.should.be.equal('sample.png')
+      (ctx) => {
+        ctx.session.photo = 'sample.png'
+        ctx.session.photo.should.be.equal('sample.png')
         setTimeout(function () {
           app.handleUpdate({
             message: {
@@ -73,8 +73,8 @@ describe('Telegraf Session', function () {
       })
     app.on('text',
       session(),
-      function * () {
-        this.session.should.not.have.property('photo')
+      (ctx) => {
+        ctx.session.should.not.have.property('photo')
         done()
       })
     setTimeout(function () {
