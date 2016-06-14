@@ -1,7 +1,7 @@
-var Telegraf = require('telegraf')
-var redisSession = require('../lib/session')
+const Telegraf = require('telegraf')
+const redisSession = require('../lib/session')
 
-var telegraf = new Telegraf(process.env.BOT_TOKEN)
+const telegraf = new Telegraf(process.env.BOT_TOKEN)
 
 telegraf.use(redisSession())
 
