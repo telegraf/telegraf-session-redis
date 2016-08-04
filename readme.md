@@ -1,9 +1,10 @@
-# Redis session middleware for Telegraf
-
 [![Build Status](https://img.shields.io/travis/telegraf/telegraf-session-redis.svg?branch=master&style=flat-square)](https://travis-ci.org/telegraf/telegraf-session-redis)
 [![NPM Version](https://img.shields.io/npm/v/telegraf-session-redis.svg?style=flat-square)](https://www.npmjs.com/package/telegraf-session-redis)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
-Redis store-based session middleware for [Telegraf (Telegram bot framework)](https://github.com/telegraf/telegraf).
+# Redis session middleware for Telegraf
+
+Redis powered session middleware for [Telegraf](https://github.com/telegraf/telegraf).
 
 ## Installation
 
@@ -46,13 +47,17 @@ telegraf.startPolling()
   * `path`: Unix socket string
   * `url`:  Redis url
   * `...`: [Other redis connection options](http://redis.js.org/#api-rediscreateclient)
+* `property`: context property name (default: `session`)
 * `ttl`: session ttl (default: forever)
-* `getSessionKey`: session key function (context -> string)
+* `getSessionKey`: session key function `(ctx) => any`)
 
-Default session key depends on sender/chat:
+Default implementation of `getSessionKey`:
 
 ```js
 function getSessionKey(ctx) {
+  if (!ctx.from || !ctx.chat) {
+    return
+  }
   return `${ctx.from.id}:${ctx.chat.id}`
 }
 ```
