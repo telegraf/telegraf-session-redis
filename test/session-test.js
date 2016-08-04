@@ -1,10 +1,10 @@
-var Telegraf = require('telegraf')
-var should = require('should')
-var session = require('../lib/session')
+const Telegraf = require('telegraf')
+const should = require('should')
+const session = require('../lib/session')
 
 describe('Telegraf Session', function () {
   it('should be defined', function (done) {
-    var app = new Telegraf()
+    const app = new Telegraf()
     app.on('text',
       session(),
       (ctx) => {
@@ -16,7 +16,7 @@ describe('Telegraf Session', function () {
   })
 
   it('should handle existing session', function (done) {
-    var app = new Telegraf()
+    const app = new Telegraf()
     app.on('text',
       session(),
       (ctx) => {
@@ -29,7 +29,7 @@ describe('Telegraf Session', function () {
   })
 
   it('should handle not existing session', function (done) {
-    var app = new Telegraf()
+    const app = new Telegraf()
     app.on('text',
       session(),
       (ctx) => {
@@ -41,7 +41,7 @@ describe('Telegraf Session', function () {
   })
 
   it('should handle session reset', function (done) {
-    var app = new Telegraf()
+    const app = new Telegraf()
     app.on('text',
       session(),
       (ctx) => {
@@ -55,7 +55,7 @@ describe('Telegraf Session', function () {
 
   it('ttl', function (done) {
     this.timeout(5000)
-    var app = new Telegraf()
+    const app = new Telegraf()
     app.on('photo',
       session({ttl: 1}),
       (ctx) => {

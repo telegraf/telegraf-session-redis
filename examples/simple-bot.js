@@ -15,4 +15,4 @@ telegraf.hears('/stats', (ctx) => {
   return ctx.reply(`${ctx.session.counter} messages from ${ctx.from.username}`)
 })
 
-telegraf.startPolling()
+telegraf.startPolling(30)
