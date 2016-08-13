@@ -16,17 +16,18 @@ $ npm install telegraf-session-redis
   
 ```js
 const Telegraf = require('telegraf')
-const session = require('telegraf-session-redis')
+const RedisSession = require('telegraf-session-redis')
 
 const telegraf = new Telegraf(process.env.BOT_TOKEN)
 
-telegraf.use(session({
-    store: {
-      host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
-      port: process.env.TELEGRAM_SESSION_PORT || 6379
-    }
+const session = new RedisSession({
+  store: {
+    host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
+    port: process.env.TELEGRAM_SESSION_PORT || 6379
   }
-))
+})
+
+telegraf.use(session.middleware())
 
 telegraf.on('text', (ctx) => {
   ctx.session.counter = ctx.session.counter || 0
@@ -67,7 +68,10 @@ function getSessionKey(ctx) {
 To destroy a session simply set it to `null`.
 
 ```js
-this.session = null
+telegraf.on('text', (ctx) => {
+  ctx.session = null
+})
+
 ```
 
 ## License

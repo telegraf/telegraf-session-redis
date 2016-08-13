@@ -1,12 +1,13 @@
 const Telegraf = require('telegraf')
 const should = require('should')
-const session = require('../lib/session')
+const RedisSession = require('../lib/session')
 
 describe('Telegraf Session', function () {
   it('should be defined', function (done) {
     const app = new Telegraf()
+    const session = new RedisSession()
     app.on('text',
-      session(),
+      session.middleware(),
       (ctx) => {
         should.exist(ctx.session)
         ctx.session.foo = 42
@@ -17,8 +18,9 @@ describe('Telegraf Session', function () {
 
   it('should handle existing session', function (done) {
     const app = new Telegraf()
+    const session = new RedisSession()
     app.on('text',
-      session(),
+      session.middleware(),
       (ctx) => {
         should.exist(ctx.session)
         ctx.session.should.have.property('foo')
@@ -30,8 +32,9 @@ describe('Telegraf Session', function () {
 
   it('should handle not existing session', function (done) {
     const app = new Telegraf()
+    const session = new RedisSession()
     app.on('text',
-      session(),
+      session.middleware(),
       (ctx) => {
         should.exist(ctx.session)
         ctx.session.should.not.have.property('foo')
@@ -42,8 +45,9 @@ describe('Telegraf Session', function () {
 
   it('should handle session reset', function (done) {
     const app = new Telegraf()
+    const session = new RedisSession()
     app.on('text',
-      session(),
+      session.middleware(),
       (ctx) => {
         ctx.session = null
         should.exist(ctx.session)
@@ -56,8 +60,9 @@ describe('Telegraf Session', function () {
   it('ttl', function (done) {
     this.timeout(5000)
     const app = new Telegraf()
+    const session = new RedisSession({ttl: 1})
     app.on('photo',
-      session({ttl: 1}),
+      session.middleware(),
       (ctx) => {
         ctx.session.photo = 'sample.png'
         ctx.session.photo.should.be.equal('sample.png')
@@ -72,7 +77,7 @@ describe('Telegraf Session', function () {
         }, 2000)
       })
     app.on('text',
-      session(),
+      session.middleware(),
       (ctx) => {
         ctx.session.should.not.have.property('photo')
         done()

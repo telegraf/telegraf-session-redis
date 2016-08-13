@@ -1,9 +1,12 @@
 const Telegraf = require('telegraf')
-const redisSession = require('../lib/session')
+const RedisSession = require('../lib/session')
 
 const telegraf = new Telegraf(process.env.BOT_TOKEN)
 
-telegraf.use(redisSession())
+// Redis client available at session.client
+const session = new RedisSession()
+
+telegraf.use(session.middleware())
 
 telegraf.on('text', (ctx, next) => {
   ctx.session.counter = ctx.session.counter || 0

@@ -1,6 +1,6 @@
 {
   "name": "telegraf-session-redis",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Redis powered session middleware for Telegraf",
   "main": "lib/session.js",
   "repository": {
@@ -46,7 +46,7 @@
     "eslint-plugin-promise": "^2.0.0",
     "eslint-plugin-standard": "^2.0.0",
     "mocha": "^3.0.0",
-    "should": "^10.0.0",
+    "should": "^11.0.0",
     "telegraf": "^2.0.0"
   }
 }
