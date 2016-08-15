@@ -44,15 +44,16 @@ you perform OAUTH or something similar, when a REDIRECT_URI is called
 on your bot server.
 
 ```js
-const redisSession = new RedisSession(/* ... */)
+const redisSession = new RedisSession()
 
-redisSession.getSession(key).then({ session, saveSession } => {
-  console.log('Session', session)
+// Retrieve session state by session key
+redisSession.getSession(key)
+  .then((session) => {
+    console.log('Session state', session)
+  })
 
-  // change and save the session
-  session.counter++
-  saveSession(session)
-})
+// Save session state
+redisSession.saveSession(key, session)
 ```
 
 ## API

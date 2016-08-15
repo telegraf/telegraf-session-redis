@@ -3,19 +3,23 @@ const should = require('should')
 const RedisSession = require('../lib/session')
 
 describe('Telegraf Session', function () {
-  it('should retrieve and save session', function(done) {
+  it('should retrieve and save session', function (done) {
     const redisSession = new RedisSession()
-    redisSession.getSession(({ session, saveSession }) => {
-      should.exist(session)
-      session.should.be.equal({})
-      session.foo = 42
-      return saveSession(session)
-    }).then(() => {
-      return redisSession.getSession(({ session }) => {
+    const key = 'session.key'
+    redisSession.getSession(key)
+      .then((session) => {
+        should.exist(session)
+        session.foo = 42
+        return redisSession.saveSession(key, session)
+      })
+      .then(() => {
+        return redisSession.getSession(key)
+      })
+      .then((session) => {
         should.exist(session)
         session.should.be.deepEqual({ foo: 42 })
       })
-    }).then(() => done())
+      .then(done)
   })
 
   it('should be defined', function (done) {

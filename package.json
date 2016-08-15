@@ -29,7 +29,7 @@
     "lib/session.js"
   ],
   "scripts": {
-    "test": "mocha test --require should"
+    "test": "eslint . && mocha test --require should"
   },
   "dependencies": {
     "bluebird": "^3.4.0",
