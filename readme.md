@@ -13,7 +13,7 @@ $ npm install telegraf-session-redis
 ```
 
 ## Example
-  
+
 ```js
 const Telegraf = require('telegraf')
 const RedisSession = require('telegraf-session-redis')
@@ -38,11 +38,29 @@ telegraf.on('text', (ctx) => {
 telegraf.startPolling()
 ```
 
+When you have stored the session key beforehand, you can access a
+session without having access to a context object. This is useful when
+you perform OAUTH or something similar, when a REDIRECT_URI is called
+on your bot server.
+
+```js
+const redisSession = new RedisSession()
+
+// Retrieve session state by session key
+redisSession.getSession(key)
+  .then((session) => {
+    console.log('Session state', session)
+  })
+
+// Save session state
+redisSession.saveSession(key, session)
+```
+
 ## API
 
 ### Options
 
-* `store`: 
+* `store`:
   * `host`: Redis host (default: *127.0.0.1*)
   * `port`: Redis port (default: *6379*)
   * `path`: Unix socket string
@@ -97,4 +115,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-

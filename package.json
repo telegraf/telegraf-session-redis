@@ -1,6 +1,6 @@
 {
   "name": "telegraf-session-redis",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Redis powered session middleware for Telegraf",
   "main": "lib/session.js",
   "repository": {
@@ -29,7 +29,7 @@
     "lib/session.js"
   ],
   "scripts": {
-    "test": "mocha test --require should"
+    "test": "eslint . && mocha test --require should"
   },
   "dependencies": {
     "bluebird": "^3.4.0",
