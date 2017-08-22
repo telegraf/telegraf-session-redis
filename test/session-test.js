@@ -1,114 +1,66 @@
 const Telegraf = require('telegraf')
-const should = require('should')
+const test = require('ava')
 const RedisSession = require('../lib/session')
 
-describe('Telegraf Session', function () {
-  it('should retrieve and save session', function (done) {
-    const redisSession = new RedisSession()
-    const key = 'session.key'
-    redisSession.getSession(key)
-      .then((session) => {
-        should.exist(session)
-        session.foo = 42
-        return redisSession.saveSession(key, session)
-      })
-      .then(() => {
-        return redisSession.getSession(key)
-      })
-      .then((session) => {
-        should.exist(session)
-        session.should.be.deepEqual({ foo: 42 })
-      })
-      .then(done)
-  })
+test.serial('should be defined', (t) => {
+  const app = new Telegraf()
+  const session = new RedisSession()
+  app.on('text', session.middleware(), (ctx) => t.true('session' in ctx))
+  return app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
+})
 
-  it('should be defined', function (done) {
-    const app = new Telegraf()
-    const session = new RedisSession()
-    app.on('text',
-      session.middleware(),
-      (ctx) => {
-        should.exist(ctx.session)
-        ctx.session.foo = 42
-        done()
-      })
-    app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
-  })
+test.serial('should retrieve and save session', (t) => {
+  const redisSession = new RedisSession()
+  const key = '1:1'
+  return redisSession.getSession(key)
+    .then((session) => {
+      t.truthy(session)
+      session.foo = 42
+      return redisSession.saveSession(key, session)
+    })
+    .then(() => {
+      return redisSession.getSession(key)
+    })
+    .then((session) => {
+      t.truthy(session)
+      t.deepEqual({ foo: 42 }, session)
+    })
+})
 
-  it('should handle existing session', function (done) {
-    const app = new Telegraf()
-    const session = new RedisSession()
-    app.on('text',
-      session.middleware(),
-      (ctx) => {
-        should.exist(ctx.session)
-        ctx.session.should.have.property('foo')
-        ctx.session.foo.should.be.equal(42)
-        done()
-      })
-    app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
-  })
+test.serial('should handle existing session', (t) => {
+  const app = new Telegraf()
+  const session = new RedisSession()
+  app.on('text',
+    session.middleware(),
+    (ctx) => {
+      t.true('session' in ctx)
+      t.true('foo' in ctx.session)
+      t.is(ctx.session.foo, 42)
+    })
+  return app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
+})
 
-  it('should handle not existing session', function (done) {
-    const app = new Telegraf()
-    const session = new RedisSession()
-    app.on('text',
-      session.middleware(),
-      (ctx) => {
-        should.exist(ctx.session)
-        ctx.session.should.not.have.property('foo')
-        done()
-      })
-    app.handleUpdate({message: {chat: {id: 1}, from: {id: 999}, text: 'hey'}})
-  })
+test.serial('should handle not existing session', (t) => {
+  const app = new Telegraf()
+  const session = new RedisSession()
+  app.on('text',
+    session.middleware(),
+    (ctx) => {
+      t.true('session' in ctx)
+      t.false('foo' in ctx.session)
+    })
+  return app.handleUpdate({message: {chat: {id: 1}, from: {id: 999}, text: 'hey'}})
+})
 
-  it('should handle session reset', function (done) {
-    const app = new Telegraf()
-    const session = new RedisSession()
-    app.on('text',
-      session.middleware(),
-      (ctx) => {
-        ctx.session = null
-        should.exist(ctx.session)
-        ctx.session.should.not.have.property('foo')
-        done()
-      })
-    app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
-  })
-
-  it('ttl', function (done) {
-    this.timeout(5000)
-    const app = new Telegraf()
-    const session = new RedisSession({ttl: 1})
-    app.on('photo',
-      session.middleware(),
-      (ctx) => {
-        ctx.session.photo = 'sample.png'
-        ctx.session.photo.should.be.equal('sample.png')
-        setTimeout(function () {
-          app.handleUpdate({
-            message: {
-              chat: {id: 1},
-              from: {id: 1},
-              text: 'hey'
-            }
-          })
-        }, 2000)
-      })
-    app.on('text',
-      session.middleware(),
-      (ctx) => {
-        ctx.session.should.not.have.property('photo')
-        done()
-      })
-    setTimeout(function () {
-      app.handleUpdate({
-        message: {
-          chat: {id: 1},
-          from: {id: 1},
-          photo: {}
-        }
-      })
-    }, 100)
-  })
+test.serial('should handle session reset', (t) => {
+  const app = new Telegraf()
+  const session = new RedisSession()
+  app.on('text',
+    session.middleware(),
+    (ctx) => {
+      ctx.session = null
+      t.truthy(ctx.session)
+      t.false('foo' in ctx.session)
+    })
+  return app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
 })
