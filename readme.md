@@ -18,7 +18,7 @@ $ npm install telegraf-session-redis
 const Telegraf = require('telegraf')
 const RedisSession = require('telegraf-session-redis')
 
-const telegraf = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN)
 
 const session = new RedisSession({
   store: {
@@ -27,15 +27,15 @@ const session = new RedisSession({
   }
 })
 
-telegraf.use(session.middleware())
+bot.use(session.middleware())
 
-telegraf.on('text', (ctx) => {
+bot.on('text', (ctx) => {
   ctx.session.counter = ctx.session.counter || 0
   ctx.session.counter++
   console.log('Session', ctx.session)
 })
 
-telegraf.startPolling()
+bot.startPolling()
 ```
 
 When you have stored the session key beforehand, you can access a
@@ -67,8 +67,8 @@ redisSession.saveSession(key, session)
   * `url`:  Redis url
   * `...`: [Other redis connection options](http://redis.js.org/#api-rediscreateclient)
 * `property`: context property name (default: `session`)
-* `ttl`: session ttl (default: forever)
-* `getSessionKey`: session key function `(ctx) => any`)
+* `ttl`: session ttl in seconds (default: forever)
+* `getSessionKey`: session key resolver function `(ctx) => any`)
 
 Default implementation of `getSessionKey`:
 
@@ -86,7 +86,7 @@ function getSessionKey(ctx) {
 To destroy a session simply set it to `null`.
 
 ```js
-telegraf.on('text', (ctx) => {
+bot.on('text', (ctx) => {
   ctx.session = null
 })
 
