@@ -64,3 +64,14 @@ test.serial('should handle session reset', (t) => {
     })
   return app.handleUpdate({message: {chat: {id: 1}, from: {id: 1}, text: 'hey'}})
 })
+
+test.serial('should handle existing inline_query', (t) => {
+  const app = new Telegraf()
+  const session = new RedisSession()
+  app.on('inline_query',
+    session.middleware(),
+    (ctx) => {
+      t.true('session' in ctx)
+    })
+  return app.handleUpdate({update_id: 1, inline_query: {id: 1}})
+})

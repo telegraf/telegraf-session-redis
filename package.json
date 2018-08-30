@@ -3,6 +3,7 @@
   "version": "5.0.0",
   "description": "Redis powered session middleware for Telegraf",
   "main": "lib/session.js",
+  "types": "lib/session.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/telegraf/telegraf-session-redis.git"
