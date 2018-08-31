@@ -1,4 +1,6 @@
 declare module 'telegraf-session-redis' {
+    import { Context } from 'telegraf';
+
     interface StoreOptions {
         readonly db?: any;
         readonly url?: string;
@@ -32,8 +34,8 @@ declare module 'telegraf-session-redis' {
 
     class RedisSession {
         middleware(): ContextUpdate;
-        getSession(key: string): string;
         clearSession(key: string): void;
+        getSession(ctx: Context): string;
         constructor(options: RedisOptions);
         saveSession(key: string, session: object): object;
     }
