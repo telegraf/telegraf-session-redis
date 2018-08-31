@@ -27,13 +27,15 @@
     "node": ">=6.2.1"
   },
   "files": [
-    "lib/session.js"
+    "lib/session.js",
+    "lib/session.d.ts"
   ],
   "scripts": {
     "lint": "eslint .",
     "test": "ava test"
   },
   "dependencies": {
+    "@types/redis": "^2.8.6",
     "debug": "^3.0.0",
     "redis": "^2.6.0-1"
   },
