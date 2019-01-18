@@ -27,7 +27,7 @@ const session = new RedisSession({
   }
 })
 
-bot.use(session.middleware())
+bot.use(session)
 
 bot.on('text', (ctx) => {
   ctx.session.counter = ctx.session.counter || 0
@@ -35,7 +35,7 @@ bot.on('text', (ctx) => {
   console.log('Session', ctx.session)
 })
 
-bot.startPolling()
+bot.launch()
 ```
 
 When you have stored the session key beforehand, you can access a
@@ -73,7 +73,7 @@ redisSession.saveSession(key, session)
 Default implementation of `getSessionKey`:
 
 ```js
-function getSessionKey(ctx) {
+function getSessionKey (ctx) {
   if (!ctx.from || !ctx.chat) {
     return
   }
