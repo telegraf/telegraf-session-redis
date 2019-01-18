@@ -17,7 +17,7 @@
     "middleware",
     "redis"
   ],
-  "author": "Vitaly Domnikov <dotcypress@gmail.com>",
+  "author": "Vitaly Domnikov <oss@vitaly.codes>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/telegraf/telegraf-session-redis/issues"
@@ -36,21 +36,21 @@
   },
   "dependencies": {
     "@types/redis": "^2.8.6",
-    "debug": "^3.0.0",
+    "debug": "^4.1.1",
     "redis": "^2.6.0-1"
   },
   "peerDependencies": {
     "telegraf": "^3.9.0"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
-    "eslint": "^4.1.1",
-    "eslint-config-standard": "^10.2.0",
-    "eslint-plugin-ava": "^4.0.0",
+    "ava": "^1.1.0",
+    "eslint": "^5.4.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-ava": "^5.1.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^5.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^4.0.0",
     "telegraf": "^3.9.0"
   }
 }
