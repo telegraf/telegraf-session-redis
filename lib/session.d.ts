@@ -36,7 +36,7 @@ declare module 'telegraf-session-redis' {
     class RedisSession {
         client: RedisClient;
         middleware(): ContextUpdate;
-        getSession(key: Context): string;
+        getSession(key: string): Promise<object>;
         clearSession(key: string): void;
         constructor(options: RedisOptions);
         saveSession(key: string, session: object): object;
