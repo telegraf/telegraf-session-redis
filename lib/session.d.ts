@@ -3,25 +3,30 @@ declare module 'telegraf-session-redis' {
     import { Context } from 'telegraf';
 
     interface StoreOptions {
-        readonly db?: any;
-        readonly url?: string;
-        readonly tls?: object;
-        readonly host: string;
-        readonly path?: string;
-        readonly family?: 'IPv6';
-        readonly prefix?: string;
-        readonly password?: string;
-        readonly port: string | number;
-        readonly string_numbers?: boolean;
-        readonly return_buffers?: boolean;
-        readonly detect_buffers?: boolean;
-        readonly no_ready_check?: boolean;
-        readonly rename_commands?: object;
-        readonly retry_strategy?: Function;
-        readonly socket_keepalive?: boolean;
-        readonly enable_offline_queue?: boolean;
-        readonly disable_resubscribing?: boolean;
-        readonly retry_unfulfilled_commands?: boolean;
+      readonly host?: string;
+      readonly port?: number;
+      readonly path?: string;
+      readonly url?: string;
+      readonly parser?: string;
+      readonly string_numbers?: boolean;
+      readonly return_buffers?: boolean;
+      readonly detect_buffers?: boolean;
+      readonly socket_keepalive?: boolean;
+      readonly socket_initial_delay?: number;
+      readonly no_ready_check?: boolean;
+      readonly enable_offline_queue?: boolean;
+      readonly retry_max_delay?: number;
+      readonly connect_timeout?: number;
+      readonly max_attempts?: number;
+      readonly retry_unfulfilled_commands?: boolean;
+      readonly auth_pass?: string;
+      readonly password?: string;
+      readonly db?: string | number;
+      readonly family?: string;
+      readonly rename_commands?: { [command: string]: string } | null;
+      readonly tls?: any;
+      readonly prefix?: string;
+      readonly retry_strategy?: RetryStrategy;
     }
 
     interface RedisOptions {
