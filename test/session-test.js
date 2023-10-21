@@ -1,9 +1,15 @@
-const Telegraf = require('telegraf')
+const { Telegraf } = require('telegraf');
 const test = require('ava')
 const RedisSession = require('../lib/session')
 
+function createBot (...args) {
+  const bot = new Telegraf(...args)
+  bot.botInfo = { id: 42, is_bot: true, username: 'bot', first_name: 'Bot' }
+  return bot
+}
+
 test.serial('should be defined', (t) => {
-  const app = new Telegraf()
+  const app = createBot()
   const session = new RedisSession({
     store: {
       host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
@@ -38,7 +44,7 @@ test.serial('should retrieve and save session', (t) => {
 })
 
 test.serial('should handle existing session', (t) => {
-  const app = new Telegraf()
+  const app = createBot()
   const session = new RedisSession({
     store: {
       host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
@@ -56,7 +62,7 @@ test.serial('should handle existing session', (t) => {
 })
 
 test.serial('should handle not existing session', (t) => {
-  const app = new Telegraf()
+  const app = createBot()
   const session = new RedisSession({
     store: {
       host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
@@ -73,7 +79,7 @@ test.serial('should handle not existing session', (t) => {
 })
 
 test.serial('should handle session reset', (t) => {
-  const app = new Telegraf()
+  const app = createBot()
   const session = new RedisSession({
     store: {
       host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
